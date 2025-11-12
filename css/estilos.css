@@ -1,7 +1,42 @@
- header{
+header{
  max-width: 1000px;
  min-height: 130px;
- background: #afff54;
+ background: #364420;
  margin: 0 auto;
- border-radius: 30px 30px 0px 0px;
- }
+ border-radius: 50px  30px 0px 0px ;
+/* Permalink - use to edit and share this gradient. Enlace permanente - úsalo para editar y compartir este gradiente: https://colorzilla.com/gradient-editor/#3799ef+0,3694ed+50,3690f0+51,1666dd+100 */
+background: linear-gradient(to bottom, rgba(55,153,239,1) 0%,rgba(54,148,237,1) 50%,rgba(54,144,240,1) 51%,rgba(22,102,221,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+background: linear-gradient(to bottom, rgba(40,42,201,1) 0%,rgba(41,137,216,1) 50%,rgba(32,124,202,1) 51%,rgba(0,59,119,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+}
+
+#Menu-h { 
+ max-width: 1000px;
+ min-height: 50px;
+ background: #0f0375;
+ margin: auto;
+}
+
+#Menu-h ul{
+list-style: none;
+display: flex;
+justify-content: center;
+}
+
+#Menu-h a{
+color: #ffffff; 
+display: block;
+padding: 20px;
+text-decoration:none;
+background: #ff5050;
+font-style: arial;
+font-size: 18px;
+}
+
+#Menu-h ul ul{
+    color: #000;;
+    display: none;
+    padding: auto;
+    text-decoration: none;
+    background: rgba(0, 2, 94, 0.685);
+    font-family: cursive;
+}

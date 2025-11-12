@@ -1,26 +1,36 @@
-package com.mycompany.mavenproject3.dao;
+package dao;
 
-import com.mycompany.mavenproject3.model.Usuario;
-import com.mycompany.mavenproject3.util.ConexionBD;
+import modelo.Usuario;
+import modelo.ConexionBD;
 import java.sql.*;
 
 public class UsuarioDAO {
-    public Usuario validar(String username, String password) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT * FROM usuarios WHERE username = ? AND password = ?";
-        try (Connection con = ConexionBD.getConnection();
-             PreparedStatement ps = con.prepareStatement(sql)) {
-            ps.setString(1, username);
-            ps.setString(2, password);
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    Usuario u = new Usuario();
-                    u.setId(rs.getInt("id"));
-                    u.setUsername(rs.getString("username"));
-                    u.setNombre(rs.getString("nombre"));
-                    return u;
-                }
-            }
+    public boolean validar(String correo, String clave) {
+        try {
+            Connection con = ConexionBD.getConexion();
+            PreparedStatement ps = con.prepareStatement(
+                "SELECT * FROM usuarios WHERE correo=? AND clave=?");
+            ps.setString(1, correo);
+            ps.setString(2, clave);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
-        return null;
+        return false;
+    }
+
+    public void registrar(Usuario u) {
+        try {
+            Connection con = ConexionBD.getConexion();
+            PreparedStatement ps = con.prepareStatement(
+                "INSERT INTO usuarios(nombre, correo, clave) VALUES (?, ?, ?)");
+            ps.setString(1, u.getNombre());
+            ps.setString(2, u.getCorreo());
+            ps.setString(3, u.getClave());
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -4,16 +4,367 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PC Innovation Stock</title>
-    <link rel="stylesheet" href="css/estilos.css">
+    <style>
+        /* --- FONDO Y ESTILOS GENERALES --- */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(-45deg, #0f2027, #203a43, #2c5364, #1e3c72, #2a5298);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: white;
+        }
 
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header {
+            font-size: 28px;
+            font-weight: bold;
+            text-align: center;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            color: #00e0ff;
+            text-shadow: 0px 0px 8px #00e0ff;
+        }
+
+        /* --- MENÚ --- */
+        #Menu-h ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+        }
+        #Menu-h ul li { position: relative; }
+        #Menu-h ul li a {
+            display: block;
+            padding: 12px 20px;
+            text-decoration: none;
+            color: white;
+            transition: background 0.3s, color 0.3s;
+        }
+        #Menu-h ul li a:hover {
+            background: #00e0ff;
+            color: black;
+        }
+
+        /* --- CATÁLOGO --- */
+        #catalogo {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 20px;
+            background: rgba(0,0,0,0.6);
+            border-radius: 12px;
+            box-shadow: 0 0 20px rgba(0,224,255,0.4);
+        }
+        .productos-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 25px;
+        }
+        .producto {
+            background: rgba(20, 20, 20, 0.85);
+            border-radius: 15px;
+            width: 220px;
+            text-align: center;
+            padding: 15px;
+            box-shadow: 0 0 12px rgba(0,224,255,0.4);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .producto img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .producto h3 { color: #00e0ff; margin: 10px 0 5px 0; }
+        .producto p { font-size: 14px; color: #ccc; }
+        .producto button {
+            background: #00e0ff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            color: black;
+            font-weight: bold;
+        }
+        .producto button:hover {
+            background: #1e90ff;
+            color: white;
+        }
+
+        /* --- MODALES --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: rgba(20, 20, 20, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px #00e0ff;
+            width: 400px;
+            text-align: center;
+        }
+        .modal-content h2 { color: #00e0ff; margin-bottom: 20px; }
+        .modal-content input {
+            width: 90%;
+            padding: 10px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 8px;
+            background: #2c5364;
+            color: white;
+        }
+        .modal-content button {
+            background: #00e0ff;
+            color: black;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .modal-content button:hover { background: #1e90ff; }
+        .close {
+            color: #ccc;
+            float: right;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            margin-top: 20px;
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-    <header> ENCABEZADO</header>
-    <nav id="Horizonte"> Inicio </nav>
-    <section id="Banner"> Banner</section>
-    <section id="contenedor"> </section>
-          <nav id="Vertical"> Verticacho </nav>
-          <section id="contenido"> Informacion de la pagina  </section>
-          <footer> PC Innovation </footer>
+
+<header>STORE © PC Innovation</header>
+
+<nav id="Menu-h">
+    <ul>
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Sobre Nosotros</a></li>
+        <li><a href="#">Productos</a></li>
+        <li><a href="#">Ofertas</a></li>
+        <li><a href="#" id="btnLogin">Login</a></li>
+        <li><a href="#" id="btnRegistro">Registro</a></li>
+    </ul>
+</nav>
+
+<!-- Catálogo -->
+<section id="catalogo">
+    <h2 style="text-align:center; color:#00e0ff;">Catálogo de Productos</h2>
+    <div class="productos-container">
+        <div class="producto">
+            <img src="imagenes/teclado.jpg" alt="Teclado Gamer">
+            <h3>Teclado Gamer RGB</h3>
+            <p>$150.000</p>
+            <button onclick="agregarAlCarrito('Teclado Gamer RGB',150000)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="imagenes/mouse.jpg" alt="Mouse Logitech">
+            <h3>Mouse Logitech G203</h3>
+            <p>$120.000</p>
+            <button onclick="agregarAlCarrito('Mouse Logitech G203',120000)">Agregar al carrito</button>
+        </div>
+
+        <div class="producto">
+            <img src="imagenes/monitor.jpg" alt="Monitor HP 24”">
+            <h3>Monitor HP 24”</h3>
+            <p>$600.000</p>
+            <button onclick="agregarAlCarrito('Monitor HP 24”',600000)">Agregar al carrito</button>
+        </div>
+    </div>
+</section>
+
+<!-- Botón del carrito -->
+<div style="text-align:center; margin-top:20px;">
+    <button id="btnCarrito" style="background:#00e0ff; border:none; padding:10px 20px; border-radius:8px; cursor:pointer; font-weight:bold;">
+        🛒 Ver Carrito (<span id="contadorCarrito">0</span>)
+    </button>
+</div>
+
+<!-- Modal del carrito -->
+<div id="carritoModal" class="modal">
+    <div class="modal-content" style="max-width:600px;">
+        <span class="close" id="cerrarCarrito">&times;</span>
+        <h2>🛒 Tu Carrito de Compras</h2>
+        <div id="itemsCarrito"></div>
+        <h3>Total: <span id="totalCarrito">$0</span></h3>
+        <button id="finalizarCompra">Finalizar Compra</button>
+    </div>
+</div>
+
+<!-- Modal de Registro -->
+<div id="registroModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="cerrarRegistro">&times;</span>
+        <h2>Registro de Usuario</h2>
+        <form id="formRegistro">
+            <input type="text" placeholder="Nombre completo" required><br>
+            <input type="email" placeholder="Correo electrónico" required><br>
+            <input type="password" placeholder="Contraseña" required><br>
+            <button type="submit">Registrar</button>
+        </form>
+    </div>
+</div>
+
+<!-- Modal de Login -->
+<div id="loginModal" class="modal">
+    <div class="modal-content">
+        <span class="close" id="cerrarLogin">&times;</span>
+        <h2>Inicio de Sesión</h2>
+        <form id="formLogin">
+            <input type="email" id="correoLogin" placeholder="Correo electrónico" required><br>
+            <input type="password" placeholder="Contraseña" required><br>
+            <div class="error" id="errorLogin" style="color:red; margin-top:10px;"></div>
+            <button type="submit">Ingresar</button>
+        </form>
+    </div>
+</div>
+
+<footer> 
+    Bogotá, Colombia | Contactos: 327 345 7791 - 310 125 1720 
+    <br> Cra. 1 #28-3 C.C. PC Innovation © Local 2-202
+</footer>
+
+<script>
+/* ==== VARIABLES ==== */
+let carrito = [];
+const btnCarrito = document.getElementById("btnCarrito");
+const modalCarrito = document.getElementById("carritoModal");
+const cerrarCarrito = document.getElementById("cerrarCarrito");
+const itemsCarrito = document.getElementById("itemsCarrito");
+const totalCarrito = document.getElementById("totalCarrito");
+const contadorCarrito = document.getElementById("contadorCarrito");
+
+const btnLogin = document.getElementById("btnLogin");
+const btnRegistro = document.getElementById("btnRegistro");
+const loginModal = document.getElementById("loginModal");
+const registroModal = document.getElementById("registroModal");
+const cerrarLogin = document.getElementById("cerrarLogin");
+const cerrarRegistro = document.getElementById("cerrarRegistro");
+const formLogin = document.getElementById("formLogin");
+const errorLogin = document.getElementById("errorLogin");
+
+/* ==== LOGIN ==== */
+btnLogin.addEventListener("click", () => {
+    if (localStorage.getItem("sesionActiva") === "true") {
+        if (confirm("¿Deseas cerrar tu sesión?")) {
+            localStorage.removeItem("sesionActiva");
+            btnLogin.textContent = "Login";
+            alert("✅ Sesión cerrada exitosamente.");
+        }
+    } else {
+        loginModal.style.display = "flex";
+    }
+});
+cerrarLogin.addEventListener("click", () => loginModal.style.display = "none");
+cerrarRegistro.addEventListener("click", () => registroModal.style.display = "none");
+btnRegistro.addEventListener("click", () => registroModal.style.display = "flex");
+
+formLogin.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const correo = document.getElementById("correoLogin").value;
+    if (!correo.includes("@")) {
+        errorLogin.textContent = "❌ Error en validación del correo electrónico.";
+    } else {
+        errorLogin.textContent = "";
+        loginModal.style.display = "none";
+        localStorage.setItem("sesionActiva", "true");
+        btnLogin.textContent = "Cerrar sesión";
+        alert("✅ Inicio de sesión exitoso. ¡Bienvenido a PC Innovation!");
+    }
+});
+
+/* ==== CARRITO ==== */
+function agregarAlCarrito(nombre, precio) {
+    carrito.push({ nombre, precio });
+    actualizarCarrito();
+    alert("✅ Producto agregado al carrito: " + nombre);
+}
+
+btnCarrito.addEventListener("click", () => {
+    modalCarrito.style.display = "flex";
+    mostrarCarrito();
+});
+
+cerrarCarrito.addEventListener("click", () => modalCarrito.style.display = "none");
+window.addEventListener("click", (e) => {
+    if (e.target === modalCarrito) modalCarrito.style.display = "none";
+});
+
+function mostrarCarrito() {
+    itemsCarrito.innerHTML = "";
+    if (carrito.length === 0) {
+        itemsCarrito.innerHTML = "<p>Tu carrito está vacío.</p>";
+        totalCarrito.textContent = "$0";
+        return;
+    }
+
+    carrito.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.innerHTML = `
+            <p>${item.nombre} - <strong>$${item.precio.toLocaleString()}</strong>
+            <button style="margin-left:10px; background:red; color:white; border:none; padding:5px 10px; border-radius:5px; cursor:pointer;" onclick="eliminarDelCarrito(${index})">Eliminar</button></p>`;
+        itemsCarrito.appendChild(div);
+    });
+
+    const total = carrito.reduce((acc, item) => acc + item.precio, 0);
+    totalCarrito.textContent = "$" + total.toLocaleString();
+}
+
+function eliminarDelCarrito(index) {
+    carrito.splice(index, 1);
+    actualizarCarrito();
+    mostrarCarrito();
+}
+
+function actualizarCarrito() {
+    contadorCarrito.textContent = carrito.length;
+}
+
+document.getElementById("finalizarCompra").addEventListener("click", () => {
+    if (carrito.length === 0) {
+        alert("⚠️ Tu carrito está vacío. Agrega productos antes de finalizar la compra.");
+    } else {
+        const total = carrito.reduce((acc, item) => acc + item.precio, 0);
+        alert(`✅ Compra finalizada con éxito.\nTotal pagado: $${total.toLocaleString()}\nGracias por comprar en PC Innovation 🖥️`);
+        carrito = [];
+        actualizarCarrito();
+        mostrarCarrito();
+        modalCarrito.style.display = "none";
+    }
+});
+
+/* ==== MANTENER SESIÓN ==== */
+window.addEventListener("load", () => {
+    if (localStorage.getItem("sesionActiva") === "true") {
+        btnLogin.textContent = "Cerrar sesión";
+    }
+});
+</script>
+
 </body>
 </html>
